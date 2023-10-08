@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>SignUp</title>
+  </head>
+  <body>
+    <form id="form">
+      <input type="text" placeholder="Name" />
+      <input type="email" placeholder="Email" />
+      <input type="password" placeholder="Password" />
+      <button>Submit</button>
+    </form>
+
+    <!-- script for axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- script to send data to backend -->
+    <script>
+      let name = document.querySelector('input[type="text"]').value;
+      let email = document.querySelector('input[type="email"]').value;
+      let password = document.querySelector('input[type="password"]').value;
+      let btn = document.querySelector('button');
+
+      btn.addEventListener('click', async () => {
+        // Prevent the default form submission
+        event.preventDefault();
+
+        // Send data using Axios
+        let data = await axios.post('/auth/signup', { email, name, password });
+        console.log('response from axios ', data);
+      });
+    </script>
+  </body>
+</html>
