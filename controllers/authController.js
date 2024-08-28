@@ -8,6 +8,15 @@ require('dotenv').config();
 module.exports.signup = async function signup(req, res) {
   try {
     const dataObj = req.body;
+    const alreadyPresent = await userModel.findOne({
+      $or: [{ email: dataObj.email }, { phone: dataObj.phone }],
+    });
+
+    if (alreadyPresent) {
+      return res.status(400).json({
+        message: 'User with this email or phone number already exists',
+      });
+    }
     const user = await userModel.create(dataObj);
     if (user) {
       mail('signup', user);
